@@ -15,15 +15,18 @@ class ArticlesController < ApplicationController
       render json: article.errors, status: :unprocessable_entity
     end
   end
-  
+
   def show
-    render json: @article
+    article = Article.find(article_param_id)
+    render json: article
   end
 
   def check
     render json: Article.all , status: :ok
   end
-  
+  def article_param_id
+      params.require(:id)
+    end
     def article_params
       params.require(:article).permit(:title, :body)
     end
